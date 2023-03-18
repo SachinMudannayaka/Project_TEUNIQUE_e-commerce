@@ -33,6 +33,28 @@ res.json({
         throw new Error("Invalid Credentials");
     }
 })
+
+//update User
+const updateAUser=asyncHandler(async(req,res)=>{
+    console.log(req.user);
+    const{id}=req.user;
+    try{
+const updateAUser=await User.findByIdAndUpdate(id,{
+    firstname:req?.body?.firstname,
+        lastname:req?.body?.lastname,
+        email:req?.body?.email,
+        mobile:req?.body?.mobile
+},{
+    new:true,
+})
+res.json(updateAUser);
+    }
+    catch(error){
+throw new Error(error);
+    }
+})
+
+
 //get all users 
 const getAllUser=asyncHandler(async(req,res)=>{
     try{
@@ -56,6 +78,20 @@ res.json({
     }
 catch(error){
         throw new Error(error);
-    }})
+    }});
 
-module.exports={createUser,loginUserCtrl,getAllUser,getAUser}
+    //get a single user
+const deleteAUser=asyncHandler(async(req,res)=>{
+    const {id}=req.params;
+    try{
+ const deleteAUser=await User.findByIdAndDelete(id);
+res.json({
+    deleteAUser
+})
+    }
+catch(error){
+        throw new Error(error);
+    }});
+
+
+module.exports={createUser,loginUserCtrl,getAllUser,getAUser,deleteAUser,updateAUser}
