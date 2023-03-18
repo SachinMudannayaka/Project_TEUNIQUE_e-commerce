@@ -28,6 +28,10 @@ var userSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
+    role:{
+        type:String,
+        default:"User"
+    }
 });
 userSchema.pre('save',async function(next){
 const salt=await bcrypt.genSaltSync(10);
